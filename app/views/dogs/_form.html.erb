@@ -1,0 +1,26 @@
+<%= form_for(@dog) do |f| %>
+  <% if @dog.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@dog.errors.count, "error") %> prohibited this dog from being saved:</h2>
+
+      <ul>
+      <% @dog.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div id="dog-form" class="row">
+    <div class="col-md-6">
+      <div class="form-fields">
+        <%= f.text_field :image, class: 'form-control', placeholder: 'Image link' %>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="actions">
+        <%= f.submit 'Submit', :class => 'btn btn-primary btn-block' %>
+      </div>
+    </div>
+  </div>
+<% end %>
