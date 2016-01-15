@@ -33,7 +33,7 @@
 
 <div class="dogs">
   <% @dogs.each do |dog| %>
-    <div class="col-md-4">
+    <div class="col-md-4 text-center">
       <img src="<%= dog.image %>" class="dog-img">
       <% if user_signed_in? %>
         <% if current_user.has_role? :admin %>
