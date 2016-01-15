@@ -17,6 +17,19 @@ class DogsController < ApplicationController
     end
   end
 
+  def destroy
+    @user = current_user
+    if @user.has_role? :admin
+      @dog.destroy
+      respond_to do |format|
+        format.html { redirect_to root_url, notice: 'Dog was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+      redirect_to :back
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_dog

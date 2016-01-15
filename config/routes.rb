@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  resources :dogs, only: [:create, :new]
+  devise_for :users
+  resources :dogs, only: [:create, :new, :destroy]
   get 'home/index'
   get 'buy', to: 'home#buy'
 

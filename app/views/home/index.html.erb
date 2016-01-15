@@ -1,4 +1,7 @@
 <div>
+  <% if user_signed_in? %>
+    <span class="signed-in-as">Signed in as: <%= current_user.email %></span>
+  <% end %>
   <h1 class="title">BADINGO</h1>
   <div class="row">
     <div class="col-md-4">
@@ -7,6 +10,13 @@
     <div class="col-md-4">
       <%= link_to 'BUY', buy_path, class: "btn btn-danger btn-lg btn-block" %>
     </div>
+    <div class="col-md-4">
+      <% if user_signed_in? %>
+        <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: "btn btn-success btn-lg btn-block" %>
+      <% else %>
+        <%= link_to 'Sign up', new_user_registration_path, class: "btn btn-success btn-lg btn-block" %>
+      <% end %>
+    </div>
   </div>
 </div>
 
@@ -14,15 +24,22 @@
   <iframe width="760" height="415" src="https://www.youtube.com/embed/d8DVULsW09s?autoplay=1&loop=1" frameborder="0" allowfullscreen></iframe>
 </div>
 
-<div class="col-md-6 col-md-offset-3">
-  <h1 class="text-center">Add a dog</h1>
-  <%= render 'dogs/form' %>
-</div>
+<% if user_signed_in? %>
+  <div class="col-md-6 col-md-offset-3">
+    <h1 class="text-center">Add a dog</h1>
+    <%= render 'dogs/form' %>
+  </div>
+<% end %>
 
 <div class="dogs">
   <% @dogs.each do |dog| %>
     <div class="col-md-4">
       <img src="<%= dog.image %>" class="dog-img">
+      <% if user_signed_in? %>
+        <% if current_user.has_role? :admin %>
+          <%= link_to 'Delete', dog, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-block' %>
+        <% end %>
+      <% end %>
     </div>
   <% end %>
 </div>
